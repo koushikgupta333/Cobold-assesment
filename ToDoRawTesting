@@ -1,0 +1,40 @@
+import time
+import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+
+class TestToDoRawTesting():
+    def setup_method(self, method):
+        self.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
+                                       desired_capabilities=DesiredCapabilities.CHROME)
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_toDoRawTesting(self):
+        self.driver.get("https://mdn.github.io/todo-react-build/")
+        self.driver.set_window_size(1320, 784)
+        self.driver.find_element(By.ID, "new-todo-input").click()
+
+        self.driver.find_element(By.ID, "new-todo-input").send_keys("Raw Testing@123")
+
+        self.driver.find_element(By.CSS_SELECTOR, ".btn__primary").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, ".toggle-btn:nth-child(1)").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, ".toggle-btn:nth-child(2)").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(3) > span:nth-child(2)").click()
+
+        self.driver.find_element(By.ID, "todo-0").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(1) > span:nth-child(2)").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, ".todo:nth-child(4) .btn__danger").click()
